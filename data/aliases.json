@@ -1,0 +1,23 @@
+{
+    "py" : "cpython3",
+    "python3" : "cpython3",
+    "python": "cpython3",
+    "gyp": "cpython3",
+    
+    "js": "nodejs",
+    "javascript" : "nodejs",
+
+    "cpp" : "cpp",
+    "hpp" : "cpp",
+    "cc"  : "cpp",
+    "hh"  : "cpp",
+    "cxx" : "cpp", 
+
+    
+    "perl": "perl",
+    "pl"  : "perl",
+    "pm"  : "perl"
+    
+
+
+}

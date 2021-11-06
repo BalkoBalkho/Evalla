@@ -1,0 +1,6 @@
+{
+    "cpython3" : "py",
+    "nodejs"   : "js",
+    "cpp"      : "cc"
+    
+}
