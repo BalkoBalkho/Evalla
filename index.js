@@ -2,6 +2,21 @@ const {Client } = require('discord.js')
 const commands = require('./commands')
 require('dotenv').config()
 
+const http = require('http')
+var log = []
+
+if (!process.env.disableserver) {
+
+    http.createServer((request, response) => { 
+        response.writeHead(200, {
+            'Content-Type': 'text/plain'
+        });
+        response.write(log.join('\n'))
+        response.end()
+    })
+
+}
+
 
 const client = new Client({intents: ['GUILD_MESSAGES','GUILDS'],partials: ['MESSAGE','CHANNEL']})
 let invoker = /<@903631415818723349> \w+[\w ]*/g
@@ -23,12 +38,19 @@ client.on('messageCreate', (msg) => {
         if (commands[commandName]) {
         if (!(Date.now() < rateLimit[msg.author.id]))  {
 
-
+            
             let arguments = command.split(' ').slice(1)
+
+            log.push(`${commandName}, ${msg.content.replace(invoker,`${arguments}`)}`)
+
             const commandObject = commands[commandName]
-            commandObject.run(msg,arguments)
+            try {
+            commandObject.run(msg,arguments) } catch (e) {
+                msg.channel.send({content:` an error happened while running your command: ${e}`}).catch(() => {})
+                log.push(e.toString())
+            }
             rateLimit[msg.author.id] = Date.now() + (commandObject.ratelimit  * 1)
-        } else {msg.channel.send(`you are being rate limited!`)}
+        } else {msg.channel.send(`you are being rate limited!`)} // TODO: make rate limiting actually work
 
         
 
@@ -37,7 +59,6 @@ client.on('messageCreate', (msg) => {
         
     }
 })
-
 
 
 client.login(process.env.BOT_TOKEN)
