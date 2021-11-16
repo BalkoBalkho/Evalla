@@ -6,7 +6,7 @@ const http = require('http')
 var log = []
 
 if (!process.env.disableserver) {
-
+   console.log = log.push()
    const server = http.createServer((request, response) => { 
         response.writeHead(200, {
             'Content-Type': 'text/plain'
