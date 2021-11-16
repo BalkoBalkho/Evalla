@@ -15,7 +15,7 @@ if (!process.env.disableserver) {
         response.end()
     })
 
-    server.listen(80)
+    server.listen()
 
 }
 
